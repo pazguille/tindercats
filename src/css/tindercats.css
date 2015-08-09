@@ -1,9 +1,4 @@
-﻿@font-face {
-  font-family:'tinder';
-  src:url('../assets/tinder.ttf');
-}
-
-/**
+﻿/**
  * Global
  */
 .main {
@@ -17,11 +12,11 @@ header {
 }
 
 .logo {
-  font-family: 'tinder';
-  font-weight: bold;
   color: #FF6B6B;
   font-size: 2em;
   margin:0;
+  text-indent: -9999px;
+  background: url('../assets/logo.png') no-repeat center center;
 }
 
 .viewport-cat {
@@ -72,6 +67,7 @@ nav {
   border: 10px solid #f1f1f1;
   background-color:#fff;
   margin: 0 -6px;
+  text-indent: -9999px;
 }
 
 .btn-l {
@@ -82,10 +78,12 @@ nav {
 
 .btn-love {
   color:#00e89d;
+  background: url('../assets/love.png') no-repeat center center;
 }
 
 .btn-hate {
   color:#FF6B6B;
+  background: url('../assets/hate.png') no-repeat center center;
 }
 
 .share-buttons {
