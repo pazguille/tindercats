@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="version" content="0.0.1" id="version">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="shortcut icon" href="src/assets/favicon.ico">
+    <title>Tindercats</title>
+    <link rel="stylesheet" href="src/css/normalize.css">
+    <link rel="stylesheet" href="src/css/base.css">
+    <link rel="stylesheet" href="src/css/tindercats.css">
+  </head>
+  <body>
+    <header>
+      <h1 class="logo">tindercats</h1>
+    </header>
+    <main>
+      <section class="viewport-cat" data-view="viewport"></section>
+      <nav>
+        <button data-action="hate" class="btn btn-hate btn-l">&#10006;</button>
+        <button data-action="love" class="btn btn-love btn-l">&#10084;</button>
+      </nav>
+    </main>
+    <footer class="share-buttons">
+      <p>with <i class="heart">&#10084;</i> by <a href="https://twitter.com/pazguille" target="_blank">pazguille</a></p>
+      <iframe id="twitter" allowtransparency="true" frameborder="0" width="100" height="22" scrolling="no" src="https://platform.twitter.com/widgets/tweet_button.html?text=tindercats%3A%20Any%20cat%20can%20change%20your%20life%20❤%20&url=https://pazguille.github.io/tindercats&hashtags=InternationalCatDay"></iframe>
+    </footer>
+    <script>
+      var $current = null;
+
+      function createCats(n) {
+        n = n || 1;
+        var $articles = [];
+        while (n) {
+          $articles.push('<article data-view="cat" class="pic" style="background-image:url(https://thecatapi.com/api/images/get?format=src&size=small&cache=' + Math.random() + ');"></article>');
+          n--;
+        }
+        return $articles.join('');
+      }
+
+      document.querySelector('[data-view="viewport"]').insertAdjacentHTML('beforeend', createCats(3));
+
+      function refreshImg() {
+        if ($current) {
+          $current.remove();
+          document.querySelector('[data-view="viewport"]').insertAdjacentHTML('beforeend', createCats());
+        }
+        $current = document.querySelector('[data-view="cat"]');
+        $current.setAttribute('data-view', 'active');
+      }
+
+      refreshImg();
+      document.querySelector('[data-action="hate"]').addEventListener('click', function() { refreshImg(); });
+      document.querySelector('[data-action="love"]').addEventListener('click', function() { refreshImg();});
+    </script>
+  </body>
+</html>

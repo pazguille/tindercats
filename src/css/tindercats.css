@@ -1,0 +1,117 @@
+﻿@font-face {
+  font-family:'tinder';
+  src:url('../assets/tinder.ttf');
+}
+
+/**
+ * Global
+ */
+.main {
+  width: 100%;
+  height: 100%;
+}
+
+header {
+  padding: 10px 0 5px;
+  border-bottom: 1px solid #EBEBEB;
+}
+
+.logo {
+  font-family: 'tinder';
+  font-weight: bold;
+  color: #FF6B6B;
+  font-size: 2em;
+  margin:0;
+}
+
+.viewport-cat {
+  max-width: 300px;
+  height: 300px;
+  position: relative;
+  border-radius: 4px 4px 0 0;
+  margin: 10px auto 15px;
+  background-color: #fff;
+
+}
+
+.pic {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px 4px 0 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  background-color: #fff;
+  z-index:-1;
+  border: 1px solid #ebebeb;
+  border-bottom: none;
+  box-sizing: border-box;
+}
+
+.viewport-cat:after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+  right: 0;
+  background: #fff url('../assets/linebottom.png') repeat-x left bottom;
+  padding-top: 15px;
+}
+
+[data-view="active"] {
+  z-index:1;
+}
+
+nav {
+  margin-top: 30px;
+}
+
+.btn {
+  border-radius: 100%;
+  border: 10px solid #f1f1f1;
+  background-color:#fff;
+  margin: 0 -6px;
+}
+
+.btn-l {
+  width: 95px;
+  height: 95px;
+  font-size: 3em;
+}
+
+.btn-love {
+  color:#00e89d;
+}
+
+.btn-hate {
+  color:#FF6B6B;
+}
+
+.share-buttons {
+  display: block;
+  overflow: hidden;
+  margin: 5px 0 10px;
+  font-size: .9em;
+}
+
+.share-buttons p {
+  margin: 10px 0;
+}
+
+.heart {
+  font-style: normal;
+  font-weight: 500;
+  color: #C0392B;
+  text-decoration: none;
+}
+
+
+/* Large Screens */
+@media all and (min-width: 54em) {
+  body {
+    max-width: 400px;
+    margin: 50px auto;
+    border: 1px solid #EBEBEB;
+  }
+}
