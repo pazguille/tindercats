@@ -63,7 +63,6 @@ nav {
 }
 
 .btn {
-  border-radius: 100%;
   border: 10px solid #f1f1f1;
   background-color:#fff;
   margin: 0 -6px;
@@ -73,7 +72,8 @@ nav {
 .btn-l {
   width: 95px;
   height: 95px;
-  font-size: 3em;
+  border-radius: 100%;
+  font-size: 0;
 }
 
 .btn-love {
