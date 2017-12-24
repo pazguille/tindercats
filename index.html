@@ -35,13 +35,13 @@
         n = n || 1;
         var $articles = [];
         while (n) {
-          $articles.push('<article data-view="cat" class="pic" style="background-image:url(https://thecatapi.com/api/images/get?format=src&size=small&cache=' + Math.random() + ');"></article>');
+          $articles.push('<article data-view="cat" class="pic" style="background-image:url(http://thecatapi.com/api/images/get?format=src&size=small&cache=' + Math.random() + ');"></article>');
           n--;
         }
         return $articles.join('');
       }
 
-      document.querySelector('[data-view="viewport"]').insertAdjacentHTML('beforeend', createCats(3));
+      document.querySelector('[data-view="viewport"]').insertAdjacentHTML('beforeend', createCats(5));
 
       function refreshImg() {
         if ($current) {
