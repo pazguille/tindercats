@@ -73,6 +73,7 @@ nav {
 }
 
 .btn {
+  touch-action:none;
   border: 10px solid #f1f1f1;
   background-color:#fff;
   margin: 0 -6px;
