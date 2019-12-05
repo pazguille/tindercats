@@ -7,7 +7,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="version" content="0.0.1" id="version">
-    <link rel="manifest" href="/manifest.json">
     <link rel="shortcut icon" href="src/assets/favicon.ico">
     <title>Tindercats</title>
     <link rel="stylesheet" href="src/css/normalize.css">
@@ -19,10 +18,10 @@
       <h1 class="logo">tindercats</h1>
     </header>
     <main>
-      <section class="viewport-cat" data-view="viewport"></section>
+      <figure class="viewport-cat" data-view="viewport"></figure>
       <nav>
-        <button data-action="hate" class="btn btn-hate btn-l">&#10006;</button>
-        <button data-action="love" class="btn btn-love btn-l">&#10084;</button>
+        <button data-action="hate" aria-label="Dislike" class="btn btn-hate btn-l">&#10006;</button>
+        <button data-action="love" aria-label="Like" class="btn btn-love btn-l">&#10084;</button>
       </nav>
     </main>
     <footer class="share-buttons">
@@ -35,7 +34,7 @@
         n = n || 1;
         var $articles = [];
         while (n) {
-          $articles.push('<article data-view="cat" class="pic" style="background-image:url(http://thecatapi.com/api/images/get?format=src&size=small&cache=' + Math.random() + ');"></article>');
+          $articles.push('<div role="image" data-view="cat" class="pic" style="background-image:url(http://thecatapi.com/api/images/get?format=src&size=small&cache=' + Math.random() + ');"></div>');
           n--;
         }
         return $articles.join('');
