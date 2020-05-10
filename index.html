@@ -36,54 +36,61 @@
     </footer>
     <script>
       window.addEventListener('load', function () {
-        var ric = window.requestIdleCallbacsk || function(fn) {
+        const catsWorker = new Worker('./src/worker.js');
+
+        const ric = window.requestIdleCallback || function(fn) {
           setTimeout(fn, 0);
         };
-        function createCats(n) {
-          n = n || 1;
-          var $articles = [];
-          while (n) {
-            $articles.push('<div role="image" data-view="cat" class="pic" style="background-image:url(https://api.thecatapi.com/api/images/get?format=src&size=small&cache=' + Math.random() + ');"></div>');
-            n--;
-          }
-          return $articles.join('');
+
+        const $viewport = document.querySelector('[data-view="viewport"]');
+        let $current = document.querySelector('[data-view="active"]');
+        const $hateBtn = document.querySelector('[data-action="hate"]');
+        const $loveBtn =document.querySelector('[data-action="love"]');
+
+        function createCats(catsCollection) {
+          const template = catsCollection.map(function(item) {
+            return '<div role="image" id="'+ item.id +'" data-url="'+item.url+'" data-view="cat" class="pic" style="background-image:url(' + item.url + ');"></div>'
+          }).join('');
+          $viewport.insertAdjacentHTML('beforeend', template);
         }
+
+        function feedCats(n) {
+          catsWorker.postMessage({topic: 'meow', value: n});
+        };
 
         function refreshImg() {
           if ($current) {
             $current.remove();
-            var nextImage = createCats();
-            $viewport.insertAdjacentHTML('beforeend', nextImage);
+            feedCats();
           }
           $current = document.querySelector('[data-view="cat"]');
-          $current.setAttribute('data-view', 'active');
+          $current && $current.setAttribute('data-view', 'active');
         }
 
-        var $viewport = document.querySelector('[data-view="viewport"]');
-        $viewport.insertAdjacentHTML('beforeend', createCats(4));
+        catsWorker.addEventListener('message', e => {
+          createCats(JSON.parse(e.data));
+        });
 
-        var $current = document.querySelector('[data-view="active"]');
-        var $hateBtn = document.querySelector('[data-action="hate"]');
-        var $loveBtn =document.querySelector('[data-action="love"]');
-        
-        $hateBtn.addEventListener('animationend', function() {
-          ric(function() {
+        feedCats(4);
+
+        $hateBtn.addEventListener('animationend', () => {
+          ric(() => {
             $hateBtn.classList.remove('hate-animation');
           });
         });
-        $hateBtn.addEventListener('click', function() {
+        $hateBtn.addEventListener('click', () => {
           refreshImg();
           ric(function() {
             $hateBtn.classList.add('hate-animation');
           });
         });
 
-        $loveBtn.addEventListener('animationend', function() {
+        $loveBtn.addEventListener('animationend', () => {
           ric(function() {
             $loveBtn.classList.remove('love-animation');
           });
         });
-        $loveBtn.addEventListener('click', function() {
+        $loveBtn.addEventListener('click', () => {
           refreshImg();
           ric(function() {
             $loveBtn.classList.add('love-animation');
