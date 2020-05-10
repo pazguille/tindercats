@@ -7,6 +7,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta name="version" content="0.0.1" id="version">
+    <meta name="color-scheme" content="light dark">
+    <link rel="preconnect" href="https://api.thecatapi.com/" />
+    <link rel="preload" href="src/assets/tinder.woff2" as="font" type="font/woff2" />
     <link rel="shortcut icon" href="src/assets/favicon.ico">
     <title>Tindercats</title>
     <link rel="stylesheet" href="src/css/normalize.css">
@@ -18,42 +21,75 @@
       <h1 class="logo">tindercats</h1>
     </header>
     <main>
-      <figure class="viewport-cat" data-view="viewport"></figure>
+      <figure class="viewport-cat" data-view="viewport">
+        <div role="image" data-view="active" class="pic" 
+          style="background-image:url(https://api.thecatapi.com/api/images/get?format=src&size=small);">
+        </div>
+      </figure>
       <nav>
         <button data-action="hate" aria-label="Dislike" class="btn btn-hate btn-l">&#10006;</button>
         <button data-action="love" aria-label="Like" class="btn btn-love btn-l">&#10084;</button>
       </nav>
     </main>
     <footer class="share-buttons">
-      <p>with <i class="heart">&#10084;</i> by <a href="https://twitter.com/pazguille" target="_blank">pazguille</a></p>
+      <p>with <i class="heart">&#10084;</i> by <a href="https://twitter.com/pazguille" target="_blank" rel="noopener">pazguille</a></p>
     </footer>
     <script>
-      var $current = null;
-
-      function createCats(n) {
-        n = n || 1;
-        var $articles = [];
-        while (n) {
-          $articles.push('<div role="image" data-view="cat" class="pic" style="background-image:url(http://thecatapi.com/api/images/get?format=src&size=small&cache=' + Math.random() + ');"></div>');
-          n--;
+      window.addEventListener('load', function () {
+        var ric = window.requestIdleCallbacsk || function(fn) {
+          setTimeout(fn, 0);
+        };
+        function createCats(n) {
+          n = n || 1;
+          var $articles = [];
+          while (n) {
+            $articles.push('<div role="image" data-view="cat" class="pic" style="background-image:url(https://api.thecatapi.com/api/images/get?format=src&size=small&cache=' + Math.random() + ');"></div>');
+            n--;
+          }
+          return $articles.join('');
         }
-        return $articles.join('');
-      }
 
-      document.querySelector('[data-view="viewport"]').insertAdjacentHTML('beforeend', createCats(5));
-
-      function refreshImg() {
-        if ($current) {
-          $current.remove();
-          document.querySelector('[data-view="viewport"]').insertAdjacentHTML('beforeend', createCats());
+        function refreshImg() {
+          if ($current) {
+            $current.remove();
+            var nextImage = createCats();
+            $viewport.insertAdjacentHTML('beforeend', nextImage);
+          }
+          $current = document.querySelector('[data-view="cat"]');
+          $current.setAttribute('data-view', 'active');
         }
-        $current = document.querySelector('[data-view="cat"]');
-        $current.setAttribute('data-view', 'active');
-      }
 
-      refreshImg();
-      document.querySelector('[data-action="hate"]').addEventListener('click', function() { refreshImg(); });
-      document.querySelector('[data-action="love"]').addEventListener('click', function() { refreshImg();});
+        var $viewport = document.querySelector('[data-view="viewport"]');
+        $viewport.insertAdjacentHTML('beforeend', createCats(4));
+
+        var $current = document.querySelector('[data-view="active"]');
+        var $hateBtn = document.querySelector('[data-action="hate"]');
+        var $loveBtn =document.querySelector('[data-action="love"]');
+        
+        $hateBtn.addEventListener('animationend', function() {
+          ric(function() {
+            $hateBtn.classList.remove('hate-animation');
+          });
+        });
+        $hateBtn.addEventListener('click', function() {
+          refreshImg();
+          ric(function() {
+            $hateBtn.classList.add('hate-animation');
+          });
+        });
+
+        $loveBtn.addEventListener('animationend', function() {
+          ric(function() {
+            $loveBtn.classList.remove('love-animation');
+          });
+        });
+        $loveBtn.addEventListener('click', function() {
+          refreshImg();
+          ric(function() {
+            $loveBtn.classList.add('love-animation');
+          });
+        });
+      });
     </script>
   </body>
 </html>
