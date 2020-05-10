@@ -29,6 +29,7 @@
       <nav>
         <button data-action="hate" aria-label="Dislike" class="btn btn-hate btn-l">&#10006;</button>
         <button data-action="love" aria-label="Like" class="btn btn-love btn-l">&#10084;</button>
+        <button data-action="share" aria-label="Share" class="btn btn-share btn-l">Share</button>
       </nav>
     </main>
     <footer class="share-buttons">
@@ -45,7 +46,8 @@
         const $viewport = document.querySelector('[data-view="viewport"]');
         let $current = document.querySelector('[data-view="active"]');
         const $hateBtn = document.querySelector('[data-action="hate"]');
-        const $loveBtn =document.querySelector('[data-action="love"]');
+        const $loveBtn = document.querySelector('[data-action="love"]');
+        const $shareBtn = document.querySelector('[data-action="share"]');
 
         function createCats(catsCollection) {
           const template = catsCollection.map(function(item) {
@@ -96,6 +98,18 @@
             $loveBtn.classList.add('love-animation');
           });
         });
+
+        $shareBtn.addEventListener('click', () => {
+          if ('share' in navigator) {
+            navigator.share({
+              title: 'Tindercats',
+              url: $current.getAttribute('data-url'),
+          });
+          } else {
+            alert($current.getAttribute('data-url'));
+          }
+        });  
+        
       });
     </script>
   </body>
